@@ -1,6 +1,6 @@
 import tkinter as tk
 import random
-from playsound import playsound
+from playsound3 import playsound
 import time
 
 # Methods for Two Player game
@@ -15,11 +15,11 @@ def continue_game():
        player = random.choice(players).get()
        if player == players[1].get():
           ai_turn()
-    elif med_flag is True:
+    elif hard_flag is True:
        players = player_initialize("Jolene", "Computer")
        player = random.choice(players).get()
        if player == players[1].get():
-          medium_ai()
+          hard_ai()
     label.config(text = player + "'s turn")
     continue_button.forget()
 
@@ -88,8 +88,8 @@ def next_turn_helper(num, row, column):
             label.config(text = players[num + 1].get() + "'s turn")
             if easy_flag is True:
               ai_turn()
-            elif med_flag is True:
-               medium_ai()
+            elif hard_flag is True:
+               hard_ai()
         elif check_win() is True:      
           if num == 1:
             win_count_one += 1
@@ -160,16 +160,16 @@ def player_initialize(zero, one):
   players = [player_0, player_1]
   return players
 
-# Medium AI methods
-def switch_med_screen():
+# Hard AI methods
+def switch_hard_screen():
   switch_helper()
-  global med_flag
+  global hard_flag
   # update difficulty
-  med_flag = True
+  hard_flag = True
   if player == players[1].get():
-    medium_ai()
+    hard_ai()
 
-def medium_ai():  
+def hard_ai():  
    if empty_spaces() >= 7:
       ai_turn()
    else:
@@ -181,7 +181,7 @@ def medium_ai():
       else:
          ai_turn()
 
-# check for two in a row so that medium ai can block
+# check for two in a row so that hard ai can block
 def check_two_in_row():
    two_in_row = False
    # record the number of two in a rows
@@ -322,7 +322,7 @@ player = random.choice(players).get()
 win_count_zero = 0
 win_count_one = 0
 easy_flag = False
-med_flag = False
+hard_flag = False
 
 buttons = [[0, 0, 0], 
           [0, 0, 0], 
@@ -356,8 +356,8 @@ two_player_button.pack(side = "top")
 easy_button = tk.Button(difficulty_frame, text = "Easy", font = ('consolas', 30), command = switch_ai_screen)
 easy_button.pack(side = "top")
 
-medium_button = tk.Button(difficulty_frame, text = "Medium", font = ('consolas', 30), command = switch_med_screen)
-medium_button.pack(side = "top")
+hard_button = tk.Button(difficulty_frame, text = "Hard", font = ('consolas', 30), command = switch_hard_screen)
+hard_button.pack(side = "top")
 
 for row in range(3):
   for column in range(3):
